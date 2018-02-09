@@ -10,6 +10,10 @@ export abstract class AbstractController {
     this.resourceName = resourceName;
   }
 
+  protected findOneInDB(key, callback){
+    this.dbDriver.find(key, null, callback);
+  }
+
   public sendResponse(statusCode, headers, body, callback){
     const response = {
       statusCode: statusCode,

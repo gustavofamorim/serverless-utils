@@ -5,6 +5,9 @@ var AbstractController = /** @class */ (function () {
         this.dbDriver = dbDriver;
         this.resourceName = resourceName;
     }
+    AbstractController.prototype.findOneInBd = function (key, callback) {
+        this.dbDriver.find(key, null, callback);
+    };
     AbstractController.prototype.sendResponse = function (statusCode, headers, body, callback) {
         var response = {
             statusCode: statusCode,
