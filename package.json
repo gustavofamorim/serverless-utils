@@ -1,0 +1,35 @@
+{
+  "name": "serverless-utils",
+  "version": "0.1.0",
+  "description": "Serverless utils",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gustavofamorim/serverless-utils.git"
+  },
+  "keywords": [
+    "serverless",
+    "aws",
+    "lambda",
+    "utils"
+  ],
+  "author": "gustavofreitasamorim@gmail.com",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/gustavofamorim/serverless-utils/issues"
+  },
+  "homepage": "https://github.com/gustavofamorim/serverless-utils#readme",
+  "dependencies": {
+    "aws-sdk": "^2.125.0",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^2.7.1"
+  }
+}
