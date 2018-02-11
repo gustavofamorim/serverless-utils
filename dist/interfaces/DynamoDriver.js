@@ -15,9 +15,11 @@ var DynamoDB = require("aws-sdk/clients/dynamodb");
 var AbstractDriver_1 = require("./AbstractDriver");
 var DynamoDriver = /** @class */ (function (_super) {
     __extends(DynamoDriver, _super);
-    function DynamoDriver(tableName) {
+    function DynamoDriver(tableName, hash) {
+        if (hash === void 0) { hash = 'id'; }
         var _this = _super.call(this) || this;
         _this.db = new DynamoDB.DocumentClient();
+        _this.hash = hash;
         _this.tableName = tableName;
         return _this;
     }
@@ -43,24 +45,22 @@ var DynamoDriver = /** @class */ (function (_super) {
     DynamoDriver.prototype["delete"] = function (id, callback) {
         var params = {
             TableName: this.tableName,
-            Key: {
-                id: id
-            }
+            Key: {}
         };
+        params.Key[this.hash] = id;
         this.db["delete"](params, callback);
     };
     DynamoDriver.prototype.find = function (id, fields, callback) {
         if (fields === void 0) { fields = []; }
         var params = {
             TableName: this.tableName,
-            Key: {
-                id: id
-            },
+            Key: {},
             AttributesToGet: fields,
             ExpressionAttributeValues: null,
             UpdateExpression: null,
             ReturnValues: null
         };
+        params.Key[this.hash] = id;
         this.db.get(params, callback);
     };
     DynamoDriver.prototype.findBy = function (field, value, fields, callback) {

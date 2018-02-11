@@ -15,7 +15,7 @@ export abstract class AbstractController {
   }
 
   public sendResponse(statusCode, headers, body, callback){
-    const response = {
+    let response = {
       statusCode: statusCode,
       headers: headers,
       body: JSON.stringify(body),

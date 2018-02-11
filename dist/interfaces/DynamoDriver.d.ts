@@ -1,9 +1,10 @@
 import DynamoDB = require('aws-sdk/clients/dynamodb');
 import { AbstractDriver } from './AbstractDriver';
 export declare class DynamoDriver extends AbstractDriver {
+    hash: string;
     tableName: string;
     db: DynamoDB.DocumentClient;
-    constructor(tableName: string);
+    constructor(tableName: string, hash?: string);
     all(fields: never[] | undefined, callback: any): void;
     create(obj: any, callback: any): void;
     update(id: any, obj: any, callback: any): void;

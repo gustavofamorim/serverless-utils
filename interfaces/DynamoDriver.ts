@@ -4,24 +4,26 @@ import { AbstractDriver } from './AbstractDriver';
 
 export class DynamoDriver extends AbstractDriver {
 
+  public hash: string;
   public tableName: string;
   public db = new DynamoDB.DocumentClient();
 
-  constructor(tableName: string){
+  constructor(tableName: string, hash = 'id'){
     super();
+    this.hash = hash;
     this.tableName = tableName;
   }
 
   public all(fields = [], callback){
-    const obj = {
-        TableName: this.tableName
+    let obj = {
+      TableName: this.tableName
     };
 
     this.db.scan(obj, callback);
   }
 
   public create(obj, callback){
-    const item = {
+    let item = {
       TableName: this.tableName,
       Item: obj
     };
@@ -38,33 +40,33 @@ export class DynamoDriver extends AbstractDriver {
   }
 
   public delete(id, callback){
-    const params = {
+    let params = {
       TableName: this.tableName,
-      Key: {
-        id: id
-      }
+      Key: { }
     };
+
+    params.Key[this.hash] = id;
 
     this.db.delete(params, callback);
   }
 
   public find(id, fields = [], callback){
-    const params = {
+    let params = {
       TableName: this.tableName,
-      Key: {
-        id: id
-      },
+      Key: { },
       AttributesToGet: fields,
       ExpressionAttributeValues: null,
       UpdateExpression: null,
       ReturnValues: null
     };
 
+    params.Key[this.hash] = id;
+
     this.db.get(params, callback);
   }
 
   public findBy(field, value, fields = [], callback){
-    const params = {
+    let params = {
       TableName : this.tableName,
       FilterExpression : field + ' = :value',
       ExpressionAttributeValues : {':value' : value}
